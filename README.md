@@ -30,4 +30,4 @@ python scanner.py
 ```
 
 ## Author
-Pavan
+VARUN
