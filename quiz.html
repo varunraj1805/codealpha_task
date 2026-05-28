@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing Awareness Quiz</title>
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #3b82f6;
+            --text: #334155;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --success: #22c55e;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0; padding: 0;
+            background-color: var(--bg); color: var(--text);
+            line-height: 1.6;
+        }
+        header {
+            background-color: var(--primary); color: white;
+            padding: 1rem 2rem; display: flex;
+            justify-content: space-between; align-items: center;
+        }
+        header h1 { margin: 0; font-size: 1.5rem; }
+        nav a {
+            color: #94a3b8; text-decoration: none;
+            margin-left: 1.5rem; font-weight: 600;
+        }
+        nav a:hover, nav a.active { color: white; }
+        main { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+        
+        .quiz-card {
+            background: var(--card); padding: 2rem;
+            border-radius: 8px; margin-top: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 1.5rem 0;
+        }
+        .quiz-option {
+            background: #f1f5f9;
+            padding: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 1px solid #e2e8f0;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .quiz-option:hover {
+            background: #e2e8f0;
+            border-color: var(--accent);
+        }
+        button {
+            background-color: var(--accent); color: white; border: none;
+            padding: 0.75rem 1.5rem; border-radius: 4px;
+            cursor: pointer; font-weight: bold; font-size: 1rem;
+        }
+        footer { text-align: center; padding: 2rem; color: #64748b; font-size: 0.9rem; position: fixed; bottom: 0; width: 100%; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>ShieldUp: Phishing Awareness</h1>
+        <nav>
+            <a href="../index.html">Home</a>
+            <a href="quiz.html" class="active">Take the Quiz</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="quiz-card">
+            <h2>Test Your Awareness</h2>
+            <hr style="border: 0; height: 1px; background: #e2e8f0; margin-bottom: 1.5rem;">
+            
+            <div id="quiz-body">
+                <p id="question-text" style="font-weight: 600; font-size: 1.2rem; margin-bottom: 1rem; color: var(--primary);"></p>
+                <div id="options-container" class="options-container"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const quizData = [
+            {
+                q: "1. You receive an urgent email from 'security@paypaI-support.com' claiming your account is locked. What should you do?",
+                options: [
+                    "Click the link inside to secure your account immediately.",
+                    "Look closely at the spelling: it uses a capital 'I' instead of a lowercase 'l'. Do not click, report it.",
+                    "Reply to the email providing your password to verify your identity."
+                ],
+                correct: 1
+            },
+            {
+                q: "2. When entering login credentials on a website, which connection protocol is secure against eavesdropping?",
+                options: [
+                    "http://",
+                    "https://",
+                    "ftp://"
+                ],
+                correct: 1
+            },
+            {
+                q: "3. A website offers you a 'free 100$ gift card' but requires you to sign in with your Google account first. This is most likely:",
+                options: [
+                    "A legitimate promotional offer.",
+                    "A phishing trap designed to steal your credential tokens.",
+                    "A standard browser update notification."
+                ],
+                correct: 1
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            const questionEl = document.getElementById('question-text');
+            const optionsContainer = document.getElementById('options-container');
+            const quizBody = document.getElementById('quiz-body');
+
+            if (currentQuestion >= quizData.length) {
+                quizBody.innerHTML = `
+                    <h3 style="color: var(--success); font-size: 1.5rem; margin-top: 0;">🎉 Quiz Completed!</h3>
+                    <p style="font-size: 1.1rem;">Your Final Score: <strong>${score} / ${quizData.length}</strong></p>
+                    <p>Great job raising your cybersecurity awareness!</p>
+                    <button onclick="location.reload()">Restart Quiz</button>
+                `;
+                return;
+            }
+
+            const current = quizData[currentQuestion];
+            questionEl.innerText = current.q;
+            optionsContainer.innerHTML = "";
+            
+            current.options.forEach((opt, idx) => {
+                const div = document.createElement('div');
+                div.className = "quiz-option";
+                div.innerText = opt;
+                div.onclick = () => selectOption(idx);
+                optionsContainer.appendChild(div);
+            });
+        }
+
+        function selectOption(index) {
+            if (index === quizData[currentQuestion].correct) {
+                score++;
+            }
+            currentQuestion++;
+            loadQuestion();
+        }
+
+        // Initialize immediately on document load
+        document.addEventListener("DOMContentLoaded", loadQuestion);
+    </script>
+</body>
+</html>
