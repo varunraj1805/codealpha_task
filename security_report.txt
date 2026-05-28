@@ -1,0 +1,8 @@
+--- Security Scan Report ---
+
+[!] Hardcoded Password found at line 1
+    Code: password = "admin123"
+
+[!] Dangerous eval() found at line 6
+    Code: eval("print('Dangerous Function')")
+
