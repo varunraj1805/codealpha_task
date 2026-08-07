@@ -1,4 +1,4 @@
-# CodeAlpha Project: Cyber Phishing Awareness \& Prevention System**
+# CodeAlpha Project: Cyber Phishing Awareness \& Prevention System
 
 
 
